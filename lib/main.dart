@@ -1,45 +1,63 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: const Text(
-            'Dicee',
-            textAlign: TextAlign.center,
-          ),
+  WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
+
+  runApp(const HomePage());
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
           backgroundColor: Colors.red,
-          centerTitle: true,
-        ),
-        bottomNavigationBar: TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorPadding: const EdgeInsets.all(5.0),
-            indicatorColor: Colors.redAccent,
-            tabs: [
-              Tab(
-                icon: Image.asset('images/icons8-dice-100.png'),
-              ),
-              Tab(
-                icon: Image.asset('images/icons8-cubos-de-dados-64.png'),
-              )
-            ]),
-        body: const TabBarView(
-          children: [
-            OneDicePage(),
-            DicePage(),
-          ],
+          appBar: AppBar(
+            title: const Text(
+              'Dicee',
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.red,
+            centerTitle: true,
+          ),
+          bottomNavigationBar: TabBar(
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.white70,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorPadding: const EdgeInsets.all(5.0),
+              indicatorColor: Colors.redAccent,
+              tabs: [
+                Tab(
+                  icon: Image.asset('images/icons8-dice-100.png'),
+                ),
+                Tab(
+                  icon: Image.asset('images/icons8-cubos-de-dados-64.png'),
+                )
+              ]),
+          body: const TabBarView(
+            children: [
+              OneDicePage(),
+              DicePage(),
+            ],
+          ),
         ),
       ),
-    ),
-  ));
+    );
+  }
 }
 
 class DicePage extends StatefulWidget {
