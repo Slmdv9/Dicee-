@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  unawaited(MobileAds.instance.initialize());
+  //unawaited(MobileAds.instance.initialize());
 
   runApp(const HomePage());
 }
@@ -27,9 +27,16 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           backgroundColor: Colors.red,
           appBar: AppBar(
+            elevation: 15,
             title: const Text(
-              'Dicee',
+              'Dicee+',
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0
+              ),
             ),
             backgroundColor: Colors.red,
             centerTitle: true,
@@ -39,7 +46,9 @@ class _HomePageState extends State<HomePage> {
               unselectedLabelColor: Colors.white70,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorPadding: const EdgeInsets.all(5.0),
-              indicatorColor: Colors.redAccent,
+              indicator: BoxDecoration(
+                color: Colors.white
+              ),
               tabs: [
                 Tab(
                   icon: Image.asset('images/icons8-dice-100.png'),
@@ -112,7 +121,7 @@ class _DicePageState extends State<DicePage> {
           icon: Image.asset('images/icons8-dice-100.png'),
           label: const Text(''),
           style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
+              backgroundColor: WidgetStatePropertyAll<Color>(Colors.red)),
         )
       ],
     );
@@ -163,7 +172,7 @@ class _OneDicePageState extends State<OneDicePage> {
           icon: Image.asset('images/icons8-dice-100.png'),
           label: const Text(''),
           style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
+              backgroundColor: WidgetStatePropertyAll<Color>(Colors.red)),
         )
       ],
     );
