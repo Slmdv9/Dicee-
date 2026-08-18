@@ -38,5 +38,6 @@ flutter build web
 docs/
 ├── architecture.md      # Module boundaries, widget responsibilities, assets, and state
 ├── builds.md            # Dependency setup, local runs, tests, and platform builds
+├── commit-conventions.md # Conventional Commit types, structure, and examples
 └── documentation-conventions.md # Documentation language and writing conventions
 ```
