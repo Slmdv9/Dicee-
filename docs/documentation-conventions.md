@@ -9,11 +9,17 @@ agreements`. Update the `AGENTS.md` documentation map when adding, removing, or
 renaming a guide. Use established language and terminology before inventing new
 ones.
 
+Keep each document to approximately 50 lines. If a guide must exceed that
+limit, split it into focused subdocuments and link them from the parent. This
+keeps progressive disclosure practical: readers and agents need to load only
+the material relevant to their task.
+
 ## 🏆 Benefits
 
 - Lets agents and developers find one convention without loading every guide.
 - Keeps documents self-contained and independently reviewable.
 - Makes the documentation map reliable and discoverable.
+- Keeps long guidance navigable through focused, selectively readable documents.
 
 ## 👀 Examples
 
