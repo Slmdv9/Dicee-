@@ -1,26 +1,41 @@
-# Documentation conventions
+# 🎯 Documentation conventions
 
-## Language
+## 💡 Convention
 
-All project documentation must be written in English.
+Write all project documentation in clear, concise English. Every convention
+belongs in a focused Markdown file under `docs/` and follows this order:
+`Convention`, `Benefits`, `Examples`, `Real world examples`, and `Related
+agreements`. Update the `AGENTS.md` documentation map when adding, removing, or
+renaming a guide. Use established language and terminology before inventing new
+ones.
 
-This rule applies to every Markdown document in `docs/`, as well as documentation added to `README.md`, `AGENTS.md`, source-code comments, and other developer-facing files. Use clear, concise English so the documentation is accessible to the whole project team.
+## 🏆 Benefits
 
-## Document structure
+- Lets agents and developers find one convention without loading every guide.
+- Keeps documents self-contained and independently reviewable.
+- Makes the documentation map reliable and discoverable.
 
-Keep documentation short and focused. New guides should use these sections in
-this order:
+## 👀 Examples
 
-1. **Description**: state the document's purpose and scope.
-2. **Types** or **sections**: explain the main categories, workflow, or
-   concepts relevant to the topic.
-3. **Examples**: include practical examples of the recommended approach and
-   examples of what to avoid, with a brief reason when useful.
+### ✅ Good: Keep a convention focused and structured
 
-Use a different heading only when the topic genuinely needs a more specific
-name, such as `Test types`. Avoid repeating information that already belongs in
-another guide.
+Use a dedicated file such as [`testing.md`](testing.md) with the required
+sections, practical good and bad examples, and links to related agreements.
 
-## Documentation map
+### ❌ Bad: Hide multiple conventions in one unstructured guide
 
-When adding, removing, or renaming a document in `docs/`, update the documentation tree in `AGENTS.md` in the same change. Keep each entry concise and describe the document's purpose.
+Do not bury architecture, testing, and database rules in a single monolithic
+file; readers cannot identify the governing convention quickly.
+
+## 🧐 Real world examples
+
+- [`docs/testing.md`](testing.md) documents test levels and stable assertions.
+- [`docs/architecture.md`](architecture.md) documents module boundaries.
+- [`AGENTS.md`](../AGENTS.md) indexes every project guide.
+
+## 🔗 Related agreements
+
+- [Constitution](constitution.md) requires adapting to existing documentation.
+- [Workflow](workflow.md) defines when documentation work is verified.
+
+Documentation made discoverable by 🐢 💨 (Turbotuga™, [Codely](https://codely.com)’s mascot)

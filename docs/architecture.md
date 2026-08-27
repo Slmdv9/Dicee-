@@ -1,46 +1,51 @@
-# Architecture
+# 🎯 Architecture conventions
 
-## Overview
+## 💡 Convention
 
-Dicee+ is a small Flutter application that lets users roll one or two dice. It uses Flutter's built-in widget state and does not rely on external state-management, routing, or dependency-injection packages.
-
-## Module boundaries
+Dicee+ is a small Flutter application using Material 3, built-in widget state,
+and no external state-management, routing, or dependency-injection packages.
+Keep boundaries aligned with the existing `lib/` layout:
 
 ```text
 lib/
-├── main.dart                 # Application entry point
-├── app/
-│   └── dicee_app.dart         # MaterialApp and application-wide themes
-├── pages/
-│   ├── home_page.dart         # Tab navigation and page composition
-│   ├── one_dice.dart          # One-die mode and its local state
-│   └── dice_page.dart         # Two-dice mode and its local state
-└── widgets/
-    └── animated_dice.dart     # Reusable animated die presentation
+├── main.dart                   # Application entry point
+├── app/dicee_app.dart          # MaterialApp and application-wide themes
+├── pages/                      # Tab navigation and mode-specific state
+└── widgets/animated_dice.dart # Reusable animated die presentation
 ```
 
-## Responsibilities and data flow
+Pages own local mode state; reusable presentation belongs in `widgets/`; assets
+remain in `images/` and are declared in `pubspec.yaml`. Die values stay in the
+one-based range 1 through 6 because image names map directly to those values.
 
-`main.dart` starts `DiceeApp`. `DiceeApp` configures Material 3 light and dark themes, then displays `HomePage`.
+## 🏆 Benefits
 
-`HomePage` owns the tab layout and presents the one-die and two-dice modes. Each mode is a `StatefulWidget` because it owns the current die value or values. Its roll action generates values from 1 through 6 and calls `setState` to rebuild the page.
+- Keeps the stack simple and understandable.
+- Makes ownership and data flow predictable.
+- Prevents duplicated page state and broken asset mappings.
 
-`AnimatedDice` is a stateless reusable widget. It receives a die value and optional size, selects the light or dark image from the active theme, and animates changes with `AnimatedSwitcher`.
+## 👀 Examples
 
-## Assets
+### ✅ Good: Keep mode state local
 
-All dice images live in `images/` and are registered through the `assets` section of `pubspec.yaml`. Keep the light and dark variants aligned with the naming convention used by `AnimatedDice`:
+`OneDice` and `DicePage` own their values and call `setState` after a roll.
+`AnimatedDice` receives a value and renders it without owning application state.
 
-```text
-images/dice1.png
-images/dice1_light.png
-```
+### ❌ Bad: Add an unnecessary state-management package
 
-When adding an asset, update `pubspec.yaml` if it is outside the existing `images/` directory.
+Do not introduce a global store for state used by a single dice page; it adds
+complexity without sharing behavior.
 
-## Implementation guidance
+## 🧐 Real world examples
 
-- Keep application-wide configuration in `lib/app/`.
-- Keep mode-specific state inside its corresponding page unless more than one page needs it.
-- Extract widgets used by multiple pages to `lib/widgets/`.
-- Preserve the one-based die-value range because image file names map directly to values 1 through 6.
+- [`lib/app/dicee_app.dart`](../lib/app/dicee_app.dart) configures the root app.
+- [`lib/pages/`](../lib/pages/) contains mode-specific state and composition.
+- [`lib/widgets/animated_dice.dart`](../lib/widgets/animated_dice.dart) reuses die presentation.
+- [`images/`](../images/) contains the light and dark die assets.
+
+## 🔗 Related agreements
+
+- [Constitution](constitution.md) defines stack simplicity and spec/code alignment.
+- [Testing](testing.md) defines verification expectations for behavior changes.
+
+Architecture documented by 🐢 💨 (Turbotuga™, [Codely](https://codely.com)’s mascot)

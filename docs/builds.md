@@ -1,58 +1,46 @@
-# Builds and local development
+# 🎯 Build and local development conventions
 
-## Prerequisites
+## 💡 Convention
 
-- Install a Flutter SDK compatible with the Dart constraint in `pubspec.yaml`.
-- Run `flutter doctor` to verify the toolchain for the platforms you intend to use.
-- Install the platform-specific tooling when building for Android, iOS, macOS, Windows, or Linux.
+Use a Flutter SDK compatible with `pubspec.yaml`, verify platform tooling with
+`flutter doctor`, and run only commands supported by the installed toolchain.
+Install dependencies with `flutter pub get`; run quality checks before sharing
+changes; select an explicit device when the default is ambiguous.
 
-## Install dependencies
+## 🏆 Benefits
+
+- Makes local setup repeatable across supported platforms.
+- Detects toolchain problems before platform builds.
+- Keeps generated artifacts and device selection intentional.
+
+## 👀 Examples
+
+### ✅ Good: Validate and target a device
 
 ```bash
+flutter doctor
 flutter pub get
-```
-
-Run this after cloning the repository or changing `pubspec.yaml`.
-
-## Quality checks
-
-```bash
 flutter analyze
 flutter test
-```
-
-`flutter analyze` applies the lint configuration in `analysis_options.yaml`. `flutter test` runs the widget tests in `test/`.
-
-## Run locally
-
-List available devices:
-
-```bash
 flutter devices
+flutter run -d chrome
 ```
 
-Run on the selected default device:
+### ❌ Bad: Assume every platform is available
 
-```bash
-flutter run
-```
+Do not run `flutter build ios` or `flutter build windows` without the required
+Xcode or Windows toolchain; use only supported platform commands.
 
-Target a specific device when needed:
+## 🧐 Real world examples
 
-```bash
-flutter run -d <device-id>
-```
+- `flutter analyze` applies [`analysis_options.yaml`](../analysis_options.yaml).
+- `flutter test` runs the widget tests in [`test/`](../test/).
+- Supported build commands include APK, iOS, web, macOS, Windows, and Linux targets.
 
-## Build artifacts
+## 🔗 Related agreements
 
-```bash
-flutter build apk
-flutter build appbundle
-flutter build ios
-flutter build web
-flutter build macos
-flutter build windows
-flutter build linux
-```
+- [Testing](testing.md) defines the required analysis and test checks.
+- [Workflow](workflow.md) defines the order of work before a commit.
+- [Constitution](constitution.md) makes passing checks non-negotiable.
 
-Run only the platform commands that your local toolchain supports. iOS and macOS builds require macOS and Xcode; Android builds require the Android SDK; Windows and Linux builds require their respective desktop toolchains.
+Build guidance supported by 🐢 💨 (Turbotuga™, [Codely](https://codely.com)’s mascot)
