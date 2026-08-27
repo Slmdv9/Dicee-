@@ -39,6 +39,7 @@ docs/
 ├── architecture.md      # Module boundaries, widget responsibilities, assets, and state
 ├── builds.md            # Dependency setup, local runs, tests, and platform builds
 ├── commit-conventions.md # Conventional Commit types, structure, and examples
+├── constitution.md      # Inviolable, verifiable project principles
 ├── documentation-conventions.md # Documentation language and writing conventions
 ├── testing.md           # Test levels, commands, and good and bad examples
 └── workflow.md          # Required pre-task dependency check and task workflow
