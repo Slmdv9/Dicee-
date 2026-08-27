@@ -40,5 +40,6 @@ docs/
 ├── builds.md            # Dependency setup, local runs, tests, and platform builds
 ├── commit-conventions.md # Conventional Commit types, structure, and examples
 ├── documentation-conventions.md # Documentation language and writing conventions
+├── testing.md           # Test levels, commands, and good and bad examples
 └── workflow.md          # Required pre-task dependency check and task workflow
 ```

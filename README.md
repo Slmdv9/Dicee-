@@ -28,6 +28,7 @@ button. The second tab follows the same interaction for two dice.
   examples.
 - [Documentation conventions](docs/documentation-conventions.md): language and
   maintenance rules for project documentation.
+- [Testing](docs/testing.md): test levels, commands, and testing examples.
 
 ## Quick start
 
