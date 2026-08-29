@@ -12,7 +12,9 @@ Every change that modifies application code must also include a focused,
 educational note under [`docs/updates/`](updates/README.md). The note must
 explain the theory and practical effect of the change, compare new declarations
 or APIs with the previous approach, record dependency implications, and list
-the tests and validation performed.
+the tests and validation performed. Before implementation begins, the agent
+must explain these planned changes to the user in theoretical and practical
+terms.
 
 ## 🏆 Benefits
 
@@ -26,7 +28,7 @@ the tests and validation performed.
 ### ✅ Good: Follow the task sequence
 
 ```text
-dependency check → implementation → relevant tests → confirmation → commit
+dependency check → explanation → implementation → relevant tests → update note → confirmation → commit
 ```
 
 ### ❌ Bad: Commit before validation or confirmation

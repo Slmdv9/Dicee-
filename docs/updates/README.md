@@ -6,6 +6,10 @@ Every change that modifies application code must include a focused Markdown
 note under `docs/updates/`, named `YYYY-MM-DD-short-slug.md`. Write the note in
 English and explain the change for learning, not only for release history:
 
+Before implementation begins, the agent must explain the planned change to the
+user in theoretical and practical terms. The explanation must precede code
+changes and establish the intended before/after behavior.
+
 - Describe the goal and the theoretical concept behind the change.
 - Explain the practical behavior before and after the change.
 - Explain new or changed variables, classes, APIs, declarations, and language
