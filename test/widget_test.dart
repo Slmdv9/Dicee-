@@ -45,20 +45,56 @@ void main() {
     try {
       await tester.pumpWidget(const DiceeApp());
 
-      expect(find.text('One die'), findsOneWidget);
-      expect(find.text('Two dice'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(TabBar),
+        matching: find.text('One die'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(TabBar),
+        matching: find.text('Two dice'),
+      ),
+      findsOneWidget,
+    );
       expect(find.text('Roll one die'), findsOneWidget);
-      expect(find.bySemanticsLabel(RegExp('One die')), findsOneWidget);
-      expect(find.bySemanticsLabel(RegExp('Two dice')), findsOneWidget);
-      expect(find.bySemanticsLabel(RegExp('Roll one die')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('One die')), findsAtLeastNWidgets(1));
+      expect(find.bySemanticsLabel(RegExp('Two dice')), findsAtLeastNWidgets(1));
+      expect(find.bySemanticsLabel(RegExp('Roll one die')), findsAtLeastNWidgets(1));
 
       await tester.tap(find.text('Two dice'));
       await tester.pumpAndSettle();
 
       expect(find.text('Roll two dice'), findsOneWidget);
-      expect(find.bySemanticsLabel(RegExp('Roll two dice')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('Roll two dice')), findsAtLeastNWidgets(1));
     } finally {
       semantics.dispose();
     }
+  });
+
+  testWidgets('composes one-die mode around its result',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+
+    expect(find.text('One die'), findsNWidgets(2));
+    expect(find.text('Result: 1'), findsOneWidget);
+    expect(find.byType(Card), findsOneWidget);
+    expect(find.text('Roll one die'), findsOneWidget);
+  });
+
+  testWidgets('keeps one-die composition usable in compact space',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(640, 960);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const DiceeApp());
+
+    expect(find.text('Result: 1'), findsOneWidget);
+    expect(find.text('Roll one die'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

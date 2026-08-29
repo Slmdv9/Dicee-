@@ -32,11 +32,13 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** las pestañas muestran `One die` y `Two dice`, y cada modo
   expone una acción `Roll` descriptiva; las pruebas verifican texto y semántica.
 
-- [ ] **T-04 (25 min): rediseñar la composición del modo de un dado.**
+- [x] **T-04 (25 min): rediseñar la composición del modo de un dado.**
   Priorizar el dado, el resultado y la acción primaria con espaciado adaptable.
   **Cubre:** RF-1, RF-7.
   **Hecho cuando:** el modo de un dado mantiene todos sus elementos visibles en
   tamaños compactos y amplios.
+  **Resultado:** `OneDicePage` usa una composición responsive con `Card`,
+  resultado explícito, `SafeArea` y scroll; T5 queda pendiente.
 
 - [ ] **T-05 (25 min): rediseñar la composición del modo de dos dados.**
   Mantener dos focos visuales distinguibles, separación suficiente y una acción
