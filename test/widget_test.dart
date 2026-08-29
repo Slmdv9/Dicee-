@@ -38,4 +38,27 @@ void main() {
       expect(theme.tabBarTheme.indicatorColor, theme.colorScheme.primary);
     }
   });
+
+  testWidgets('labels dice modes and roll actions',
+      (WidgetTester tester) async {
+    final semantics = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(const DiceeApp());
+
+      expect(find.text('One die'), findsOneWidget);
+      expect(find.text('Two dice'), findsOneWidget);
+      expect(find.text('Roll one die'), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('One die')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('Two dice')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('Roll one die')), findsOneWidget);
+
+      await tester.tap(find.text('Two dice'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Roll two dice'), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('Roll two dice')), findsOneWidget);
+    } finally {
+      semantics.dispose();
+    }
+  });
 }

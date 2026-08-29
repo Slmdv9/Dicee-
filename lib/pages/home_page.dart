@@ -22,8 +22,14 @@ class HomePage extends StatelessWidget {
         ),
         bottomNavigationBar: const TabBar(
           tabs: [
-            Tab(icon: Icon(Icons.casino_outlined)),
-            Tab(icon: Icon(Icons.casino)),
+            Tab(
+              icon: Icon(Icons.casino_outlined),
+              text: 'One die',
+            ),
+            Tab(
+              icon: Icon(Icons.casino),
+              text: 'Two dice',
+            ),
           ],
         ),
         body: const TabBarView(

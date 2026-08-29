@@ -31,7 +31,7 @@ class _OneDicePageState extends State<OneDicePage> {
         FilledButton.icon(
           onPressed: roll,
           icon: const Icon(Icons.refresh),
-          label: const Text(''),
+          label: const Text('Roll one die'),
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
           ),

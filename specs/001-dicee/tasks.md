@@ -23,12 +23,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** `DiceeApp` centraliza `ColorScheme`, fondo, acción primaria,
   estado deshabilitado y selección de pestaña; los tests cubren ambos temas.
 
-- [ ] **T-03 (20 min): actualizar la navegación de los dos modos.**
+- [x] **T-03 (20 min): actualizar la navegación de los dos modos.**
   Hacer evidente la pestaña seleccionada y mantener nombres comprensibles para
   navegación y lanzamiento.
   **Cubre:** RF-1, RF-4, RF-6.
   **Hecho cuando:** cada modo puede identificarse visual y semánticamente sin
   depender del contenido del dado.
+  **Resultado:** las pestañas muestran `One die` y `Two dice`, y cada modo
+  expone una acción `Roll` descriptiva; las pruebas verifican texto y semántica.
 
 - [ ] **T-04 (25 min): rediseñar la composición del modo de un dado.**
   Priorizar el dado, el resultado y la acción primaria con espaciado adaptable.

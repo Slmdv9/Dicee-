@@ -40,7 +40,7 @@ class _DicePageState extends State<DicePage> {
         FilledButton.icon(
           onPressed: roll,
           icon: const Icon(Icons.refresh),
-          label: const Text(''),
+          label: const Text('Roll two dice'),
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
             textStyle: const TextStyle(
