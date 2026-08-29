@@ -42,5 +42,6 @@ docs/
 ├── constitution.md      # Inviolable, verifiable project principles
 ├── documentation-conventions.md # Documentation language and writing conventions
 ├── testing.md           # Test levels, commands, and good and bad examples
+├── updates/README.md    # Educational notes required for code changes
 └── workflow.md          # Required pre-task dependency check and task workflow
 ```
