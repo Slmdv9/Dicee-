@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 /* ---------------- UN DADO ---------------- */
 
+enum _RollPhase { available, rolling, result }
+
 class OneDicePage extends StatefulWidget {
   const OneDicePage({super.key});
 
@@ -14,10 +16,24 @@ class OneDicePage extends StatefulWidget {
 
 class _OneDicePageState extends State<OneDicePage> {
   int dice = 1;
+  int _pendingDice = 1;
+  _RollPhase _rollPhase = _RollPhase.available;
 
   void roll() {
+    if (_rollPhase == _RollPhase.rolling) return;
+
+    final nextDice = Random().nextInt(6) + 1;
     setState(() {
-      dice = Random().nextInt(6) + 1;
+      _pendingDice = nextDice;
+      _rollPhase = _RollPhase.rolling;
+    });
+
+    Future<void>.delayed(const Duration(milliseconds: 50), () {
+      if (!mounted) return;
+      setState(() {
+        dice = _pendingDice;
+        _rollPhase = _RollPhase.result;
+      });
     });
   }
 
@@ -56,7 +72,11 @@ class _OneDicePageState extends State<OneDicePage> {
                     margin: EdgeInsets.zero,
                     child: Padding(
                       padding: EdgeInsets.all(isCompact ? 12 : 20),
-                      child: AnimatedDice(value: dice, size: diceSize),
+                      child: AnimatedDice(
+                        value: dice,
+                        size: diceSize,
+                        isRolling: _rollPhase == _RollPhase.rolling,
+                      ),
                     ),
                   ),
                   SizedBox(height: isCompact ? 16 : 24),
@@ -69,7 +89,7 @@ class _OneDicePageState extends State<OneDicePage> {
                   ),
                   SizedBox(height: isCompact ? 16 : 32),
                   FilledButton.icon(
-                    onPressed: roll,
+                    onPressed: _rollPhase == _RollPhase.rolling ? null : roll,
                     icon: const Icon(Icons.refresh),
                     label: const Text('Roll one die'),
                     style: FilledButton.styleFrom(

@@ -10,6 +10,11 @@ Before implementation begins, the agent must explain the planned change to the
 user in theoretical and practical terms. The explanation must precede code
 changes and establish the intended before/after behavior.
 
+After implementation and validation, the agent must repeat the educational
+summary in the conversation before asking for commit confirmation. This chat
+summary must describe the actual before/after behavior, the main concepts or
+APIs introduced, and link to the detailed update note.
+
 - Describe the goal and the theoretical concept behind the change.
 - Explain the practical behavior before and after the change.
 - Explain new or changed variables, classes, APIs, declarations, and language
@@ -25,6 +30,7 @@ split it into linked subdocuments so readers can load only what they need.
 - Turns every code change into a reusable Flutter learning reference.
 - Makes syntax, API, dependency, and language-version changes understandable.
 - Preserves the reasoning behind implementation choices for future maintainers.
+- Keeps the learning explanation visible to the user at the point of review.
 - Supports progressive disclosure through focused, selectively readable notes.
 
 ## 👀 Examples

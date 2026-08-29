@@ -60,12 +60,15 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
 
 ## Estado y animación
 
-- [ ] **T-07 (25 min): definir los estados locales de una tirada.**
+- [x] **T-07 (25 min): definir los estados locales de una tirada.**
   Modelar disponible, girando y resultado estable dentro de cada página, con un
   resultado final generado una sola vez al comenzar.
   **Cubre:** RF-2, RF-3, RF-4, RF-5.
   **Hecho cuando:** una tirada tiene una transición de estados determinista y
   cada modo conserva su propio resultado válido entre 1 y 6.
+  **Resultado:** `OneDicePage` y `DicePage` modelan fases locales disponible,
+  girando y resultado, generan valores pendientes una sola vez y recuperan la
+  acción tras completar la transición; T8 queda pendiente.
 
 - [ ] **T-08 (30 min): integrar el giro de 800 ms en el modo de un dado.**
   Mostrar un giro reconocible, resolver el resultado al finalizar y conservarlo

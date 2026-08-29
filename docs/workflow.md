@@ -14,7 +14,10 @@ explain the theory and practical effect of the change, compare new declarations
 or APIs with the previous approach, record dependency implications, and list
 the tests and validation performed. Before implementation begins, the agent
 must explain these planned changes to the user in theoretical and practical
-terms.
+terms. After implementation and validation, the agent must also show the user
+a concise educational summary in the conversation, covering the actual before
+/ after behavior and the concepts introduced, before requesting or creating a
+commit. The chat summary must link to the corresponding update note.
 
 ## 🏆 Benefits
 
@@ -22,6 +25,8 @@ terms.
 - Ensures changes are validated before they are committed.
 - Keeps commit authorization explicit and auditable.
 - Preserves the reasoning and learning context for every code change.
+- Ensures the learning explanation is visible in the active conversation, not
+  only stored in a file.
 
 ## 👀 Examples
 

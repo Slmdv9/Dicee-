@@ -174,4 +174,81 @@ void main() {
     expect(decoration.border!.top.width, 2);
     expect(decoration.boxShadow, isNotEmpty);
   });
+
+  testWidgets('models a one-die roll from rolling to stable result',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+
+    await tester.tap(find.text('Roll one die'));
+    await tester.pump();
+
+    final oneDieButton = find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton,
+    );
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed, isNull);
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isTrue);
+
+    await tester.pump(const Duration(milliseconds: 50));
+
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed,
+        isNotNull);
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isFalse);
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is Text && RegExp(r'Result: [1-6]').hasMatch(
+              widget.data ?? '',
+            ),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('keeps two-dice roll values independent through the transition',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+    await tester.tap(find.text('Two dice'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Roll two dice'));
+    await tester.pump();
+
+    final twoDiceButton = find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton,
+    );
+    expect(tester.widget<ButtonStyleButton>(twoDiceButton).onPressed, isNull);
+    expect(find.byType(AnimatedDice), findsNWidgets(2));
+    expect(
+      tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(
+            (die) => die.isRolling,
+          ),
+      isTrue,
+    );
+
+    await tester.pump(const Duration(milliseconds: 50));
+
+    expect(
+      tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(
+            (die) => !die.isRolling,
+          ),
+      isTrue,
+    );
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is Text && RegExp(r'Left result: [1-6]').hasMatch(
+              widget.data ?? '',
+            ),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is Text && RegExp(r'Right result: [1-6]').hasMatch(
+              widget.data ?? '',
+            ),
+      ),
+      findsOneWidget,
+    );
+  });
 }

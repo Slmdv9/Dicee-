@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 /* ---------------- DOS DADOS ---------------- */
 
+enum _RollPhase { available, rolling, result }
+
 class DicePage extends StatefulWidget {
   const DicePage({super.key});
 
@@ -15,11 +17,28 @@ class DicePage extends StatefulWidget {
 class _DicePageState extends State<DicePage> {
   int left = 1;
   int right = 1;
+  int _pendingLeft = 1;
+  int _pendingRight = 1;
+  _RollPhase _rollPhase = _RollPhase.available;
 
   void roll() {
+    if (_rollPhase == _RollPhase.rolling) return;
+
+    final nextLeft = Random().nextInt(6) + 1;
+    final nextRight = Random().nextInt(6) + 1;
     setState(() {
-      left = Random().nextInt(6) + 1;
-      right = Random().nextInt(6) + 1;
+      _pendingLeft = nextLeft;
+      _pendingRight = nextRight;
+      _rollPhase = _RollPhase.rolling;
+    });
+
+    Future<void>.delayed(const Duration(milliseconds: 50), () {
+      if (!mounted) return;
+      setState(() {
+        left = _pendingLeft;
+        right = _pendingRight;
+        _rollPhase = _RollPhase.result;
+      });
     });
   }
 
@@ -74,6 +93,7 @@ class _DicePageState extends State<DicePage> {
                               label: 'Left result: $left',
                               value: left,
                               size: diceSize,
+                              isRolling: _rollPhase == _RollPhase.rolling,
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -83,6 +103,7 @@ class _DicePageState extends State<DicePage> {
                               label: 'Right result: $right',
                               value: right,
                               size: diceSize,
+                              isRolling: _rollPhase == _RollPhase.rolling,
                             ),
                           ),
                         ],
@@ -91,7 +112,7 @@ class _DicePageState extends State<DicePage> {
                   ),
                   SizedBox(height: isCompact ? 16 : 32),
                   FilledButton.icon(
-                    onPressed: roll,
+                    onPressed: _rollPhase == _RollPhase.rolling ? null : roll,
                     icon: const Icon(Icons.refresh),
                     label: const Text('Roll two dice'),
                     style: FilledButton.styleFrom(
@@ -119,11 +140,12 @@ class _DicePageState extends State<DicePage> {
     required String label,
     required int value,
     required double size,
+    required bool isRolling,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AnimatedDice(value: value, size: size),
+        AnimatedDice(value: value, size: size, isRolling: isRolling),
         const SizedBox(height: 8),
         Semantics(
           label: label,
