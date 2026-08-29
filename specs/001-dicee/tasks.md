@@ -14,12 +14,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** [`visual-states.md`](visual-states.md) documenta los seis estados
   y su verificación; T2 queda pendiente.
 
-- [ ] **T-02 (25 min): definir la jerarquía Material 3 compartida.**
+- [x] **T-02 (25 min): definir la jerarquía Material 3 compartida.**
   Aplicar roles coherentes para fondo, superficie del dado, resultado, acción
   primaria, selección y estado ocupado en ambos modos.
   **Cubre:** RF-1, RF-7.
   **Hecho cuando:** tema claro y oscuro muestran la misma jerarquía, con
   contraste legible y una acción primaria distinguible.
+  **Resultado:** `DiceeApp` centraliza `ColorScheme`, fondo, acción primaria,
+  estado deshabilitado y selección de pestaña; los tests cubren ambos temas.
 
 - [ ] **T-03 (20 min): actualizar la navegación de los dos modos.**
   Hacer evidente la pestaña seleccionada y mantener nombres comprensibles para

@@ -9,31 +9,41 @@ class DiceeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-
-      // 🌞 TEMA CLARO
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        fontFamily: 'Inter',
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.greenAccent,
-          brightness: Brightness.light,
-        ),
-        scaffoldBackgroundColor: Colors.grey.shade50,
-      ),
-
-      // 🌙 TEMA OSCURO
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        fontFamily: 'Inter',
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.greenAccent,
-          brightness: Brightness.dark,
-        ),
-      ),
-
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
       home: const HomePage(),
     );
   }
+}
+
+ThemeData _buildTheme(Brightness brightness) {
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: Colors.greenAccent,
+    brightness: brightness,
+  );
+
+  return ThemeData(
+    useMaterial3: true,
+    brightness: brightness,
+    fontFamily: 'Inter',
+    colorScheme: colorScheme,
+    scaffoldBackgroundColor: colorScheme.surfaceContainerLowest,
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        disabledBackgroundColor: colorScheme.surfaceContainerHighest,
+        disabledForegroundColor: colorScheme.onSurfaceVariant,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+      ),
+    ),
+    tabBarTheme: TabBarThemeData(
+      labelColor: colorScheme.primary,
+      unselectedLabelColor: colorScheme.onSurfaceVariant,
+      indicatorColor: colorScheme.primary,
+      dividerColor: Colors.transparent,
+    ),
+  );
 }

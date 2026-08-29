@@ -12,4 +12,30 @@ void main() {
     expect(find.byIcon(Icons.casino), findsOneWidget);
     expect(find.byIcon(Icons.refresh), findsOneWidget);
   });
+
+  testWidgets('defines shared light and dark Material 3 hierarchy',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+
+    final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
+    final themes = [app.theme!, app.darkTheme!];
+
+    for (final theme in themes) {
+      expect(theme.useMaterial3, isTrue);
+      expect(theme.scaffoldBackgroundColor,
+          theme.colorScheme.surfaceContainerLowest);
+      expect(theme.filledButtonTheme.style, isNotNull);
+      expect(theme.filledButtonTheme.style!.foregroundColor, isNotNull);
+      expect(theme.filledButtonTheme.style!.backgroundColor, isNotNull);
+      expect(
+        theme.filledButtonTheme.style!.backgroundColor!
+            .resolve({WidgetState.disabled}),
+        isNotNull,
+      );
+      expect(theme.tabBarTheme.labelColor, theme.colorScheme.primary);
+      expect(theme.tabBarTheme.unselectedLabelColor,
+          theme.colorScheme.onSurfaceVariant);
+      expect(theme.tabBarTheme.indicatorColor, theme.colorScheme.primary);
+    }
+  });
 }
