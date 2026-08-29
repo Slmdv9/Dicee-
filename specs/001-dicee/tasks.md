@@ -49,12 +49,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** `DicePage` usa una tarjeta compartida con dos columnas de
   resultado adaptables y etiquetas `Left result`/`Right result`; T6 queda pendiente.
 
-- [ ] **T-06 (25 min): enriquecer la presentación reutilizable del dado.**
+- [x] **T-06 (25 min): enriquecer la presentación reutilizable del dado.**
   Añadir profundidad, estados activo/ocupado y resultado estable alrededor de
   los assets existentes sin cambiar la correspondencia de valores.
   **Cubre:** RF-1, RF-2, RF-5, RF-7.
   **Hecho cuando:** los dos modos reutilizan la misma presentación y los seis
   valores conservan su asset claro y oscuro correspondiente.
+  **Resultado:** `AnimatedDice` conserva el mapeo de assets y añade una
+  superficie Material 3 con profundidad y estado ocupado; T7 queda pendiente.
 
 ## Estado y animación
 

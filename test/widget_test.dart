@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dicee/app/dicee_app.dart';
+import 'package:dicee/widgets/animated_dice.dart';
 
 void main() {
   testWidgets('displays the dice modes', (WidgetTester tester) async {
@@ -126,5 +127,51 @@ void main() {
     expect(find.text('Left result: 1'), findsOneWidget);
     expect(find.text('Right result: 1'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('preserves themed die assets inside a depth surface',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true, brightness: Brightness.light),
+        home: const AnimatedDice(value: 4),
+      ),
+    );
+
+    final lightImage = tester.widget<Image>(find.byType(Image));
+    expect((lightImage.image as AssetImage).assetName,
+        'images/dice4_light.png');
+    expect(find.byType(AnimatedContainer), findsOneWidget);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+        home: const AnimatedDice(value: 4),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final darkImage = tester.widget<Image>(find.byType(Image));
+    expect((darkImage.image as AssetImage).assetName, 'images/dice4.png');
+  });
+
+  testWidgets('exposes a distinct occupied presentation state',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: const AnimatedDice(value: 2, isRolling: true),
+      ),
+    );
+
+    final surface = tester.widget<AnimatedContainer>(
+      find.byType(AnimatedContainer),
+    );
+    final decoration = surface.decoration! as BoxDecoration;
+    final theme = Theme.of(tester.element(find.byType(AnimatedDice)));
+
+    expect(decoration.border!.top.color, theme.colorScheme.primary);
+    expect(decoration.border!.top.width, 2);
+    expect(decoration.boxShadow, isNotEmpty);
   });
 }
