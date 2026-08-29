@@ -97,4 +97,34 @@ void main() {
     expect(find.text('Roll one die'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('composes two-dice mode with distinct results',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+
+    await tester.tap(find.text('Two dice'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Two dice'), findsNWidgets(2));
+    expect(find.text('Left result: 1'), findsOneWidget);
+    expect(find.text('Right result: 1'), findsOneWidget);
+    expect(find.byType(Card), findsOneWidget);
+    expect(find.text('Roll two dice'), findsOneWidget);
+  });
+
+  testWidgets('keeps two-dice composition usable in compact space',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(640, 960);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const DiceeApp());
+    await tester.tap(find.text('Two dice'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Left result: 1'), findsOneWidget);
+    expect(find.text('Right result: 1'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }

@@ -40,12 +40,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** `OneDicePage` usa una composición responsive con `Card`,
   resultado explícito, `SafeArea` y scroll; T5 queda pendiente.
 
-- [ ] **T-05 (25 min): rediseñar la composición del modo de dos dados.**
+- [x] **T-05 (25 min): rediseñar la composición del modo de dos dados.**
   Mantener dos focos visuales distinguibles, separación suficiente y una acción
   primaria compartida.
   **Cubre:** RF-1, RF-4, RF-7.
   **Hecho cuando:** ambos dados se distinguen sin solaparse y el resultado de
   cada uno puede consultarse por separado.
+  **Resultado:** `DicePage` usa una tarjeta compartida con dos columnas de
+  resultado adaptables y etiquetas `Left result`/`Right result`; T6 queda pendiente.
 
 - [ ] **T-06 (25 min): enriquecer la presentación reutilizable del dado.**
   Añadir profundidad, estados activo/ocupado y resultado estable alrededor de
