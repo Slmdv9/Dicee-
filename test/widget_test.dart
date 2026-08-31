@@ -219,7 +219,7 @@ void main() {
     );
   });
 
-  testWidgets('keeps two-dice roll values independent through the transition',
+  testWidgets('spins two dice together for 800 milliseconds before stabilising',
       (WidgetTester tester) async {
     await tester.pumpWidget(const DiceeApp());
     await tester.tap(find.text('Two dice'));
@@ -231,16 +231,42 @@ void main() {
     final twoDiceButton = find.byWidgetPredicate(
       (widget) => widget is ButtonStyleButton,
     );
+    final twoDiceRotations = find.descendant(
+      of: find.byType(AnimatedDice),
+      matching: find.byType(RotationTransition),
+    );
     expect(tester.widget<ButtonStyleButton>(twoDiceButton).onPressed, isNull);
     expect(find.byType(AnimatedDice), findsNWidgets(2));
+    expect(twoDiceRotations, findsNWidgets(2));
     expect(
       tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(
             (die) => die.isRolling,
           ),
       isTrue,
     );
+    expect(
+      tester.widgetList<RotationTransition>(twoDiceRotations).every(
+            (rotation) => rotation.turns.value == 0,
+          ),
+      isTrue,
+    );
 
-    await tester.pump(const Duration(milliseconds: 50));
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(
+      tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(
+            (die) => die.isRolling,
+          ),
+      isTrue,
+    );
+    expect(
+      tester.widgetList<RotationTransition>(twoDiceRotations).every(
+            (rotation) => rotation.turns.value > 0,
+          ),
+      isTrue,
+    );
+
+    await tester.pump(const Duration(milliseconds: 400));
 
     expect(
       tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(

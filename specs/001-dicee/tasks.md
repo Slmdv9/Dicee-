@@ -79,12 +79,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** `AnimatedDice` gira una vuelta durante 800 ms en el modo de
   un dado y muestra el valor pendiente al terminar; T9 queda pendiente.
 
-- [ ] **T-09 (30 min): coordinar el giro de los dos dados.**
+- [x] **T-09 (30 min): coordinar el giro de los dos dados.**
   Aplicar la misma secuencia temporal al modo de dos dados sin mezclar sus
   valores ni perder la distinción visual entre ellos.
   **Cubre:** RF-2, RF-4, RF-5.
   **Hecho cuando:** los dos dados inician y terminan la tirada de forma
   coordinada y cada uno conserva un valor independiente entre 1 y 6.
+  **Resultado:** `DicePage` resuelve sus dos valores pendientes tras la misma
+  duración de giro reutilizada; T10 queda pendiente.
 
 - [ ] **T-10 (20 min): bloquear y recuperar la acción de lanzamiento.**
   Deshabilitar o ignorar toques durante el estado girando y restaurar el control
