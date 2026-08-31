@@ -70,12 +70,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   girando y resultado, generan valores pendientes una sola vez y recuperan la
   acción tras completar la transición; T8 queda pendiente.
 
-- [ ] **T-08 (30 min): integrar el giro de 800 ms en el modo de un dado.**
+- [x] **T-08 (30 min): integrar el giro de 800 ms en el modo de un dado.**
   Mostrar un giro reconocible, resolver el resultado al finalizar y conservarlo
   estable después de la animación.
   **Cubre:** RF-2, RF-5.
   **Hecho cuando:** el modo de un dado muestra movimiento durante 800 ms y
   termina en el resultado generado sin cambiarlo después.
+  **Resultado:** `AnimatedDice` gira una vuelta durante 800 ms en el modo de
+  un dado y muestra el valor pendiente al terminar; T9 queda pendiente.
 
 - [ ] **T-09 (30 min): coordinar el giro de los dos dados.**
   Aplicar la misma secuencia temporal al modo de dos dados sin mezclar sus

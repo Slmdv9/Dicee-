@@ -175,7 +175,7 @@ void main() {
     expect(decoration.boxShadow, isNotEmpty);
   });
 
-  testWidgets('models a one-die roll from rolling to stable result',
+  testWidgets('spins one die for 800 milliseconds before stabilising',
       (WidgetTester tester) async {
     await tester.pumpWidget(const DiceeApp());
 
@@ -185,11 +185,25 @@ void main() {
     final oneDieButton = find.byWidgetPredicate(
       (widget) => widget is ButtonStyleButton,
     );
+    final oneDieRotation = find.byType(RotationTransition).first;
     expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed, isNull);
     expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
         isTrue);
+    expect(
+      tester.widget<RotationTransition>(oneDieRotation).turns.value,
+      0,
+    );
 
-    await tester.pump(const Duration(milliseconds: 50));
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isTrue);
+    expect(
+      tester.widget<RotationTransition>(oneDieRotation).turns.value,
+      greaterThan(0),
+    );
+
+    await tester.pump(const Duration(milliseconds: 400));
 
     expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed,
         isNotNull);

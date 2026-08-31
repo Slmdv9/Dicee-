@@ -28,7 +28,7 @@ class _OneDicePageState extends State<OneDicePage> {
       _rollPhase = _RollPhase.rolling;
     });
 
-    Future<void>.delayed(const Duration(milliseconds: 50), () {
+    Future<void>.delayed(AnimatedDice.rollDuration, () {
       if (!mounted) return;
       setState(() {
         dice = _pendingDice;
