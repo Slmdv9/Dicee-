@@ -219,6 +219,41 @@ void main() {
     );
   });
 
+  testWidgets('ignores repeated one-die rolls and recovers after rebuild',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const DiceeApp());
+
+    final oneDieButton = find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton,
+    );
+    await tester.tap(find.text('Roll one die'));
+    await tester.pump();
+
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed, isNull);
+
+    await tester.tap(find.text('Roll one die'));
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isTrue);
+
+    await tester.pumpWidget(const DiceeApp());
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed,
+        isNotNull);
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isFalse);
+    expect(
+      find.byWidgetPredicate(
+        (widget) => widget is Text && RegExp(r'Result: [1-6]').hasMatch(
+              widget.data ?? '',
+            ),
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('spins two dice together for 800 milliseconds before stabilising',
       (WidgetTester tester) async {
     await tester.pumpWidget(const DiceeApp());

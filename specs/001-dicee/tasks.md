@@ -88,12 +88,15 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   **Resultado:** `DicePage` resuelve sus dos valores pendientes tras la misma
   duración de giro reutilizada; T10 queda pendiente.
 
-- [ ] **T-10 (20 min): bloquear y recuperar la acción de lanzamiento.**
+- [x] **T-10 (20 min): bloquear y recuperar la acción de lanzamiento.**
   Deshabilitar o ignorar toques durante el estado girando y restaurar el control
   al finalizar, incluyendo una reconstrucción de la vista.
   **Cubre:** RF-3.
   **Hecho cuando:** los toques repetidos no generan tiradas adicionales y el
   control vuelve a estar disponible tras una finalización normal o reconstrucción.
+  **Resultado:** las fases locales bloquean el control y la lógica de tirada;
+  una prueba verifica el toque repetido y la recuperación tras reconstruir.
+  T11 queda pendiente.
 
 - [ ] **T-11 (20 min): aplicar movimiento reducido.**
   Seleccionar una transición atenuada cuando el sistema solicite reducir
