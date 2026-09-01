@@ -23,12 +23,15 @@ class _OneDicePageState extends State<OneDicePage> {
     if (_rollPhase == _RollPhase.rolling) return;
 
     final nextDice = Random().nextInt(6) + 1;
+    final rollDuration = MediaQuery.disableAnimationsOf(context)
+        ? AnimatedDice.reducedMotionDuration
+        : AnimatedDice.rollDuration;
     setState(() {
       _pendingDice = nextDice;
       _rollPhase = _RollPhase.rolling;
     });
 
-    Future<void>.delayed(AnimatedDice.rollDuration, () {
+    Future<void>.delayed(rollDuration, () {
       if (!mounted) return;
       setState(() {
         dice = _pendingDice;
@@ -76,6 +79,7 @@ class _OneDicePageState extends State<OneDicePage> {
                         value: dice,
                         size: diceSize,
                         isRolling: _rollPhase == _RollPhase.rolling,
+                        reduceMotion: MediaQuery.disableAnimationsOf(context),
                       ),
                     ),
                   ),

@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 
 class AnimatedDice extends StatefulWidget {
   static const rollDuration = Duration(milliseconds: 800);
+  static const reducedMotionDuration = Duration(milliseconds: 150);
 
   final int value;
   final double size;
   final bool isRolling;
+  final bool reduceMotion;
 
   const AnimatedDice({
     super.key,
     required this.value,
     this.size = 120,
     this.isRolling = false,
+    this.reduceMotion = false,
   });
 
   @override
@@ -29,19 +32,24 @@ class _AnimatedDiceState extends State<AnimatedDice>
       vsync: this,
       duration: AnimatedDice.rollDuration,
     );
-    if (widget.isRolling) {
-      _rotationController.forward();
-    }
+    if (widget.isRolling) _startRotation();
   }
 
   @override
   void didUpdateWidget(covariant AnimatedDice oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isRolling && !oldWidget.isRolling) {
-      _rotationController.forward(from: 0);
+      _startRotation();
     } else if (!widget.isRolling && oldWidget.isRolling) {
       _rotationController.reset();
     }
+  }
+
+  void _startRotation() {
+    _rotationController.duration = widget.reduceMotion
+        ? AnimatedDice.reducedMotionDuration
+        : AnimatedDice.rollDuration;
+    _rotationController.forward(from: 0);
   }
 
   @override
@@ -63,7 +71,10 @@ class _AnimatedDiceState extends State<AnimatedDice>
         widget.isRolling ? colorScheme.primary : colorScheme.outlineVariant;
 
     return RotationTransition(
-      turns: _rotationController,
+      turns: Tween<double>(
+        begin: 0,
+        end: widget.reduceMotion ? 0.05 : 1,
+      ).animate(_rotationController),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.all(12),

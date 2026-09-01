@@ -26,13 +26,16 @@ class _DicePageState extends State<DicePage> {
 
     final nextLeft = Random().nextInt(6) + 1;
     final nextRight = Random().nextInt(6) + 1;
+    final rollDuration = MediaQuery.disableAnimationsOf(context)
+        ? AnimatedDice.reducedMotionDuration
+        : AnimatedDice.rollDuration;
     setState(() {
       _pendingLeft = nextLeft;
       _pendingRight = nextRight;
       _rollPhase = _RollPhase.rolling;
     });
 
-    Future<void>.delayed(AnimatedDice.rollDuration, () {
+    Future<void>.delayed(rollDuration, () {
       if (!mounted) return;
       setState(() {
         left = _pendingLeft;
@@ -47,6 +50,7 @@ class _DicePageState extends State<DicePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isCompact = constraints.maxHeight < 560;
+        final reduceMotion = MediaQuery.disableAnimationsOf(context);
         final horizontalPadding = constraints.maxWidth < 360 ? 16.0 : 24.0;
         final cardPadding = isCompact ? 12.0 : 20.0;
         final diceSize = min(
@@ -94,6 +98,7 @@ class _DicePageState extends State<DicePage> {
                               value: left,
                               size: diceSize,
                               isRolling: _rollPhase == _RollPhase.rolling,
+                              reduceMotion: reduceMotion,
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -104,6 +109,7 @@ class _DicePageState extends State<DicePage> {
                               value: right,
                               size: diceSize,
                               isRolling: _rollPhase == _RollPhase.rolling,
+                              reduceMotion: reduceMotion,
                             ),
                           ),
                         ],
@@ -141,11 +147,17 @@ class _DicePageState extends State<DicePage> {
     required int value,
     required double size,
     required bool isRolling,
+    required bool reduceMotion,
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AnimatedDice(value: value, size: size, isRolling: isRolling),
+        AnimatedDice(
+          value: value,
+          size: size,
+          isRolling: isRolling,
+          reduceMotion: reduceMotion,
+        ),
         const SizedBox(height: 8),
         Semantics(
           label: label,

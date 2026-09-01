@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dicee/app/dicee_app.dart';
+import 'package:dicee/pages/dice_page.dart';
+import 'package:dicee/pages/one_dice.dart';
 import 'package:dicee/widgets/animated_dice.dart';
 
 void main() {
@@ -251,6 +253,74 @@ void main() {
             ),
       ),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('uses a reduced transition when animations are disabled',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(disableAnimations: true),
+        child: const MaterialApp(home: OneDicePage()),
+      ),
+    );
+
+    await tester.tap(find.text('Roll one die'));
+    await tester.pump();
+
+    final oneDieButton = find.byWidgetPredicate(
+      (widget) => widget is ButtonStyleButton,
+    );
+    final rotation = find.byType(RotationTransition);
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed, isNull);
+
+    await tester.pump(const Duration(milliseconds: 75));
+
+    final turns = tester.widget<RotationTransition>(rotation).turns.value;
+    expect(turns, greaterThan(0));
+    expect(turns, lessThan(0.1));
+
+    await tester.pump(const Duration(milliseconds: 75));
+
+    expect(tester.widget<ButtonStyleButton>(oneDieButton).onPressed,
+        isNotNull);
+    expect(tester.widget<AnimatedDice>(find.byType(AnimatedDice)).isRolling,
+        isFalse);
+  });
+
+  testWidgets('uses a reduced transition for both dice',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(disableAnimations: true),
+        child: const MaterialApp(home: DicePage()),
+      ),
+    );
+
+    await tester.tap(find.text('Roll two dice'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 75));
+
+    final rotations = find.descendant(
+      of: find.byType(AnimatedDice),
+      matching: find.byType(RotationTransition),
+    );
+    expect(rotations, findsNWidgets(2));
+    expect(
+      tester.widgetList<RotationTransition>(rotations).every(
+            (rotation) =>
+                rotation.turns.value > 0 && rotation.turns.value < 0.1,
+          ),
+      isTrue,
+    );
+
+    await tester.pump(const Duration(milliseconds: 75));
+
+    expect(
+      tester.widgetList<AnimatedDice>(find.byType(AnimatedDice)).every(
+            (die) => !die.isRolling,
+          ),
+      isTrue,
     );
   });
 

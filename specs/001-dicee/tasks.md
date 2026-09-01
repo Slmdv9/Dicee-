@@ -98,12 +98,14 @@ aproximado de 20–30 minutos y debe conservar el stack Flutter existente.
   una prueba verifica el toque repetido y la recuperación tras reconstruir.
   T11 queda pendiente.
 
-- [ ] **T-11 (20 min): aplicar movimiento reducido.**
+- [x] **T-11 (20 min): aplicar movimiento reducido.**
   Seleccionar una transición atenuada cuando el sistema solicite reducir
   movimiento y conservar el resultado y el estado del control.
   **Cubre:** RF-2, RF-6.
   **Hecho cuando:** con movimiento reducido no se ejecuta el giro completo, pero
   el resultado final y la recuperación del control siguen siendo visibles.
+  **Resultado:** `MediaQuery.disableAnimationsOf` selecciona una inclinación de
+  150 ms y la misma duración para el resultado; T12 queda pendiente.
 
 ## Adaptabilidad y accesibilidad
 
